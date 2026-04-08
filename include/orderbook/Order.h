@@ -1,23 +1,50 @@
 #pragma once
+#include <string>
 
-enum class Side {
+enum class Side
+{
     BUY,
     SELL
 };
 
-class Order {
+class Order
+{
 public:
-    Order(int id, double price, int quantity, Side side)
-        : id_(id), price_(price), quantity_(quantity), side_(side) {}
+    Order(int id, int quantity, Side side)
+    {
+        id_ = id;
+        quantity_ = quantity;
+        side_ = side;
+    }
 
-    int getId() const { return id_; }
-    double getPrice() const { return price_; }
-    int getQuantity() const { return quantity_; }
-    Side getSide() const { return side_; }
+    virtual ~Order() = default;
+
+    virtual std::string describe() const = 0;
+
+    int getId() const
+    {
+        return id_;
+    }
+
+    int getQuantity() const
+    {
+        return quantity_;
+    }
+
+    Side getSide() const
+    {
+        return side_;
+    }
+
+    std::string sideToString() const
+    {
+        if (side_ == Side::BUY)
+            return "BUY";
+        return "SELL";
+    }
 
 private:
     int id_;
-    double price_;
     int quantity_;
     Side side_;
 };
